@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "deploy:preview": "powershell -ExecutionPolicy Bypass -File ./deploy-preview.ps1"
   },
   "dependencies": {
     "lenis": "^1.3.26",

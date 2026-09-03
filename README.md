@@ -179,6 +179,34 @@ Where one would naturally appear, the sentence is restructured instead: split in
 two, joined with a comma or conjunction, or turned into a colon for a
 label/description pair. Please keep it that way when editing.
 
+## Preview deployment
+
+A static copy is published for client review at
+**https://ahmadazeez999.github.io/worldreach-preview/**
+
+```bash
+npm run deploy:preview     # rebuild and republish
+```
+
+The preview is a genuinely different build, not the production one:
+
+* `output: "export"` writes plain HTML, since GitHub Pages has no Node runtime
+* the server action is aliased out via `lib/submit.ts`, because a `"use server"`
+  module anywhere in the graph fails an export build outright. Forms still run
+  their full flow and finish on a prefilled mail link
+* `basePath` puts the site under the repository subpath. Note that `next/image`
+  does **not** prefix basePath for plain `/public` string paths, which is why
+  `lib/asset.ts` exists and why the image components call it internally
+* **robots and page meta are set to noindex.** A preview is a duplicate of a
+  real business's site; letting it be indexed would split the client's search
+  presence and compete with their own domain
+
+The repository is public because GitHub Pages requires it on a free plan. If
+that is a problem, the same `out/` folder can be dropped on any static host.
+
+None of the above touches the production build, which still ships redirects,
+security headers, optimised images and the working server action.
+
 ## Outstanding content slots
 
 Marked with `⚠ CONTENT SLOT` in the source. None of these are faked; each is
