@@ -1,0 +1,102 @@
+{
+  "WARNING": "PLACEHOLDER PHOTOGRAPHY. These are free stock images used so the client can see a complete-looking site. They are not photographs of World Reach, its consultant, or its clients. Replace them with the practice's own photography before launch.",
+  "licence": "Pexels licence — free for commercial use, attribution not required but appreciated: https://www.pexels.com/license/",
+  "photos": [
+    {
+      "file": "bc-interior.jpg",
+      "description": "Highway through the mountains of British Columbia",
+      "source": "Pexels",
+      "pexelsId": "11357903",
+      "pexelsUrl": "https://www.pexels.com/photo/11357903/",
+      "photographer": "(see Pexels page)"
+    },
+    {
+      "file": "canada-city.jpg",
+      "description": "Vancouver skyline against the North Shore mountains",
+      "source": "Pexels",
+      "pexelsId": "29072584",
+      "pexelsUrl": "https://www.pexels.com/photo/29072584/",
+      "photographer": "(see Pexels page)"
+    },
+    {
+      "file": "consultation.jpg",
+      "description": "A video consultation on a laptop at a desk",
+      "source": "Pexels",
+      "pexelsId": "8512178",
+      "pexelsUrl": "https://www.pexels.com/photo/8512178/",
+      "photographer": "(see Pexels page)"
+    },
+    {
+      "file": "arrival.jpg",
+      "description": "Travellers silhouetted at an airport terminal window",
+      "source": "Pexels",
+      "pexelsId": "18695674",
+      "pexelsUrl": "https://www.pexels.com/photo/18695674/",
+      "photographer": "(see Pexels page)"
+    },
+    {
+      "file": "family.jpg",
+      "description": "A couple walking together, hands held",
+      "source": "Pexels",
+      "pexelsId": "27254929",
+      "pexelsUrl": "https://www.pexels.com/photo/27254929/",
+      "photographer": "(see Pexels page)"
+    },
+    {
+      "file": "study.jpg",
+      "description": "Students working at desks",
+      "source": "Pexels",
+      "pexelsId": "7092523",
+      "pexelsUrl": "https://www.pexels.com/photo/7092523/",
+      "photographer": "(see Pexels page)"
+    },
+    {
+      "file": "work.jpg",
+      "description": "A worker on a warehouse floor",
+      "source": "Pexels",
+      "pexelsId": "31112238",
+      "pexelsUrl": "https://www.pexels.com/photo/31112238/",
+      "photographer": "(see Pexels page)"
+    },
+    {
+      "file": "documents.jpg",
+      "description": "Passports on a plain surface",
+      "source": "Pexels",
+      "pexelsId": "8061986",
+      "pexelsUrl": "https://www.pexels.com/photo/8061986/",
+      "photographer": "(see Pexels page)"
+    },
+    {
+      "file": "portrait.jpg",
+      "description": "A professional in a jacket, photographed from the shoulders down",
+      "source": "Pexels",
+      "pexelsId": "37409445",
+      "pexelsUrl": "https://www.pexels.com/photo/37409445/",
+      "photographer": "(see Pexels page)"
+    },
+    {
+      "file": "reunion.jpg",
+      "description": "Two people holding each other",
+      "source": "Pexels",
+      "pexelsId": "6565239",
+      "pexelsUrl": "https://www.pexels.com/photo/6565239/",
+      "photographer": "(see Pexels page)"
+    },
+    {
+      "file": "citizenship.jpg",
+      "description": "Autumn trees turning colour",
+      "source": "Pexels",
+      "pexelsId": "34947040",
+      "pexelsUrl": "https://www.pexels.com/photo/34947040/",
+      "photographer": "(see Pexels page)"
+    },
+    {
+      "file": "landscape.jpg",
+      "description": "An open field against an autumn treeline",
+      "source": "Pexels",
+      "pexelsId": "18819411",
+      "pexelsUrl": "https://www.pexels.com/photo/18819411/",
+      "photographer": "(see Pexels page)"
+    }
+  ]
+}

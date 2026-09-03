@@ -1,26 +1,351 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   WORLD REACH IMMIGRATION CONSULTING, Design System
+   ------------------------------------------------------------
+   Palette rationale: the practice is based in Kamloops, BC.
+   Tk'emlúps, "the meeting of the waters". Ink carries the
+   institutional authority immigration work demands; crimson is drawn
+   from the Interior's dry sagebrush hills and keeps the page
+   human; river is a cool counterweight used sparingly.
+   Deliberately NOT generic legal-blue.
+   ============================================================ */
+
+@theme {
+  /* ---------- Colour ---------- */
+  /* Taken from the supplied logo: a deep navy globe and a crimson trajectory.
+     Navy carries the institutional authority immigration work demands and
+     crimson is used sparingly, as the logo uses it, for the one thing on a
+     view that matters most. The warm off-white ground stops the pairing
+     tipping into cold corporate blue. */
+  --color-ink: #0e1f33;
+  --color-ink-2: #16293f;
+  --color-ink-3: #22384f;
+  --color-ink-4: #32475d;
+
+  --color-navy: #1e3a5f;
+
+  --color-slate: #44566a; /* body copy on paper */
+  --color-mute: #58697d; /* secondary copy, 5.1:1 on paper, 4.9:1 on paper-2 */
+  --color-mute-dark: #93a8bc; /* secondary copy on ink, 6.7:1 */
+
+  --color-line: #e2ddd4; /* hairline on paper */
+  --color-line-2: #d3ccbf; /* stronger hairline on paper */
+  --color-line-dark: #26384c; /* hairline on ink */
+
+  --color-paper: #faf8f4;
+  --color-paper-2: #f3efe8;
+  --color-paper-3: #ebe5db;
+
+  --color-crimson: #a62b31; /* accent on paper, 7.2:1 */
+  --color-crimson-2: #d1656b; /* accent on ink, 5.1:1 */
+  --color-crimson-3: #e6c3c3; /* tint */
+  --color-crimson-4: #f9eeed; /* wash */
+
+  --color-danger: #a3312a;
+  --color-success: #2f6a4f;
+
+  /* ---------- Type ---------- */
+  --font-display: var(--font-newsreader), ui-serif, Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* ---------- Layout ---------- */
+  --spacing-gutter: 1.5rem;
+
+  /* ---------- Motion ---------- */
+  /* One easing vocabulary, used everywhere. Expo-out for entrances
+     (fast commit, long settle. Reads as confident, not bouncy). */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+  --animate-marquee: marquee 40s linear infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --header-h: 4.5rem;
+    --page-max: 78rem; /* 1248px */
+    --page-pad: 1.25rem;
+    color-scheme: light;
+  }
+
+  @media (min-width: 48rem) {
+    :root {
+      --header-h: 5.5rem;
+      --page-pad: 2rem;
+    }
+  }
+
+  @media (min-width: 80rem) {
+    :root {
+      --page-pad: 2.5rem;
+    }
+  }
+
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  /* Lenis owns scrolling when it is active; disable native smooth
+     so the two never fight over the same gesture. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  html.lenis {
+    scroll-behavior: auto;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-slate);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.021em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Focus: visible, branded, never removed. Offset keeps it clear of
+     the element's own border so it reads on both grounds. */
+  :focus-visible {
+    outline: 2px solid var(--color-crimson);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .on-ink :focus-visible,
+  .on-ink:focus-visible {
+    outline-color: var(--color-crimson-3);
+  }
+
+  ::selection {
+    background-color: var(--color-crimson-3);
+    color: var(--color-ink);
+  }
+
+  /* Anchor targets clear the fixed header. */
+  [id] {
+    scroll-margin-top: calc(var(--header-h) + 2rem);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================================
+   Layout primitives
+   ============================================================ */
+@utility page {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-pad);
+}
+
+@utility page-wide {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: var(--page-pad);
+}
+
+/* Reading measure, long-form copy should never run full width. */
+@utility measure {
+  max-width: 40rem;
+}
+
+@utility measure-tight {
+  max-width: 32rem;
+}
+
+/* ============================================================
+   Typographic scale: fluid, but capped so it never gets shouty.
+   ============================================================ */
+@utility t-display {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 1.6rem + 5.2vw, 5.75rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+}
+
+@utility t-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 1.5rem + 3.4vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -0.026em;
+  font-weight: 400;
+}
+
+@utility t-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.875rem, 1.35rem + 2.3vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.023em;
+  font-weight: 400;
+}
+
+@utility t-h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 1.15rem + 1.05vw, 1.875rem);
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+  font-weight: 400;
+}
+
+@utility t-h4 {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+@utility t-lead {
+  font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.3125rem);
+  line-height: 1.6;
+  letter-spacing: -0.011em;
+  color: var(--color-slate);
+}
+
+@utility t-body {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-slate);
+}
+
+@utility t-small {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--color-mute);
+}
+
+/* Eyebrow / kicker, mono, tracked, uppercase. Used to label
+   sections without resorting to another heading level. */
+@utility t-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-crimson);
+}
+
+@utility t-eyebrow-mute {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-mute);
+}
+
+/* Numerals in mono read as "record", which is exactly the tone
+   a licence number and a numbered process want. */
+@utility t-numeral {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   Motion helpers
+   ============================================================ */
+
+/* Text that rises out of a mask. Applied to a wrapper with
+   overflow hidden; child carries the transform. */
+@utility mask-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes wr-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ============================================================
+   Reduced motion: honour the OS setting completely.
+   Everything still arrives in its final state.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   Fail-safe reveal states
+   ------------------------------------------------------------
+   Motion serialises its `initial` values into the server HTML as inline
+   styles. Until the document is marked motion-capable by the inline script in the
+   document head, confirmed by MotionProvider on hydration, those
+   hidden states are overridden here so the content is visible.
+
+   The effect: if the client bundle is blocked, fails, or errors during
+   hydration, the page still reads correctly instead of rendering a header
+   above an empty screen. In the normal case the flag is set before first
+   paint, so these rules never apply and nothing flashes.
+   ============================================================ */
+html:not([data-motion-ready]) [style*="opacity:0"],
+html:not([data-motion-ready]) [style*="opacity: 0"],
+html:not([data-motion-ready]) [style*="translateY"],
+html:not([data-motion-ready]) [style*="translateX"],
+html:not([data-motion-ready]) [style*="scaleX(0)"],
+html:not([data-motion-ready]) [style*="scaleY(0)"],
+html:not([data-motion-ready]) [style*="inset(100%"] {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
 }
