@@ -8,6 +8,8 @@
 # site moves to a custom domain, change BASE below (use "" for a root domain).
 
 $ErrorActionPreference = "Stop"
+# Native tools write progress to stderr; do not treat that as a failure.
+$PSNativeCommandUseErrorActionPreference = $false
 $BASE = "/worldreach-preview"
 $REPO = "https://github.com/AhmadAzeez999/worldreach-preview.git"
 
@@ -26,8 +28,8 @@ if (-not (Test-Path .git)) { git init -q }
 git checkout -q -B gh-pages
 git add -A
 git -c user.name="Ahmad Azeez" -c user.email="azeeztriplea10@gmail.com" commit -q -m "Publish static preview build"
-git remote remove origin 2>$null
-git remote add origin $REPO
+if ($LASTEXITCODE -ne 0) { Write-Host "nothing new to commit" -ForegroundColor Yellow }
+if ((git remote) -contains "origin") { git remote set-url origin $REPO } else { git remote add origin $REPO }
 git push -f origin gh-pages
 Pop-Location
 
