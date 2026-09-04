@@ -13,7 +13,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden bg-ink text-mute-dark">
+    <footer data-dark-section className="relative overflow-hidden bg-ink text-mute-dark">
       {/* Oversized mark, cropped off the edge, the logo as architecture
           rather than a sticker. Very low contrast; it should register as
           texture, not as a second logo. */}

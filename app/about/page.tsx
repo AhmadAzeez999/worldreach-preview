@@ -99,7 +99,7 @@ export default function AboutPage() {
       </section>
 
       {/* ---------- Who may represent you ---------- */}
-      <section className="bg-ink py-24 text-paper md:py-32">
+      <section data-dark-section className="bg-ink py-24 text-paper md:py-32">
         <div className="page">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-5">

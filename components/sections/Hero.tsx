@@ -40,7 +40,7 @@ export function Hero() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-ink text-paper">
+    <section data-dark-section className="relative overflow-hidden bg-ink text-paper">
       {/* Background mark, cropped hard by the right edge so it reads as
           architecture, not a watermark. Draws itself in behind the copy. */}
       <div
@@ -180,8 +180,6 @@ export function Hero() {
         </motion.dl>
       </div>
 
-      {/* Tells the header when it has cleared the dark hero. */}
-      <div data-hero-sentinel className="pointer-events-none absolute bottom-0 h-px w-px" />
     </section>
   );
 }

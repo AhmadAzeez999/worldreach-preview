@@ -16,47 +16,71 @@ export function Header() {
   const headerRef = useRef<HTMLElement>(null);
   const [hovered, setHovered] = useState<string | null>(null);
 
-  /** True while the header still sits over a dark hero. */
-  const [overHero, setOverHero] = useState(false);
+  /** True while a dark-background section is behind the bar. */
+  const [onDarkGround, setOnDarkGround] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
-  /* Dark-hero pages render a sentinel at the hero's lower edge. The header
-     styles itself for the dark ground for exactly as long as that edge is
-     still below the header band, i.e. while the hero is what sits behind it.
-     Pages without a sentinel simply get the solid treatment throughout.
+  /* Which ground is the bar currently sitting on?
 
-     An IntersectionObserver is the wrong tool here: the sentinel starts below
-     the fold on a tall hero, so "not intersecting" is ambiguous between "hero
-     still behind us" and "hero long gone". One rAF-throttled measurement in
-     the scroll handler answers the question directly. */
+     Sections with a dark background are tagged `data-dark-section`, and the
+     header asks, on each scroll frame, whether any of them crosses its own
+     midline. That is strictly more general than the previous approach of
+     watching a single sentinel at the foot of the hero: the masthead now
+     adapts over the image band, the closing call to action, the dark block on
+     the About page and the footer, not just the hero.
+
+     An IntersectionObserver is the wrong tool here. "Not intersecting" cannot
+     distinguish "the dark section is still behind us" from "it is long gone",
+     and observing several elements at different thresholds gets fiddly fast.
+     One rAF-throttled measurement answers the question directly. */
   useEffect(() => {
     let raf = 0;
+    let darkSections: HTMLElement[] = [];
+
+    const collect = () => {
+      darkSections = Array.from(
+        document.querySelectorAll<HTMLElement>("[data-dark-section]"),
+      );
+    };
 
     const measure = () => {
       raf = 0;
-      setScrolled(window.scrollY > 8);
+      setScrolled(window.scrollY > 16);
 
-      const sentinel = document.querySelector("[data-hero-sentinel]");
-      if (!sentinel) {
-        setOverHero(false);
-        return;
-      }
       const headerH = headerRef.current?.offsetHeight ?? 72;
-      setOverHero(sentinel.getBoundingClientRect().top > headerH);
+      const line = headerH / 2; // test against the bar's midline, so the
+      // treatment swaps once rather than flickering at a boundary.
+      setOnDarkGround(
+        darkSections.some((el) => {
+          const r = el.getBoundingClientRect();
+          return r.top <= line && r.bottom >= line;
+        }),
+      );
     };
 
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(measure);
     };
 
+    collect();
     measure();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
+
+    /* Sections arrive as reveals mount and images settle, so re-collect when
+       the document changes rather than trusting a single pass at mount. */
+    const mo = new MutationObserver(() => {
+      collect();
+      onScroll();
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+
     return () => {
       if (raf) cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      mo.disconnect();
     };
   }, [pathname]);
 
@@ -81,10 +105,14 @@ export function Header() {
     };
   }, [open]);
 
-  /* What is behind the header right now: the ink hero, or the ink mobile
-     overlay (which sits below the header in z-order). Either way the masthead
-     and controls need their light treatment. */
-  const onDark = overHero || open;
+  /* Either a dark section is behind the bar, or the ink mobile overlay is
+     (it sits below the header in z-order). Both need the light masthead. */
+  const onDark = onDarkGround || open;
+
+  /* Show the backdrop only once something is actually passing underneath the
+     bar. While the mobile overlay is open the header sits on the overlay's own
+     ink field, so a second surface there would just look like a seam. */
+  const showBackdrop = scrolled && !open;
 
   return (
     <>
@@ -97,16 +125,34 @@ export function Header() {
 
       <header
         ref={headerRef}
-        className={[
-          "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500",
-          "ease-[cubic-bezier(0.25,1,0.5,1)]",
-          onDark
-            ? "border-b border-transparent bg-transparent"
-            : scrolled
-              ? "border-b border-line bg-paper/85 backdrop-blur-md supports-[backdrop-filter]:bg-paper/70"
-              : "border-b border-transparent bg-paper",
-        ].join(" ")}
+        className="fixed inset-x-0 top-0 z-50"
       >
+        {/*
+          The backdrop is its own layer rather than a background on the header.
+
+          Two reasons. Transitioning `backdrop-filter` directly is janky across
+          browsers, whereas fading a blurred layer's opacity is smooth
+          everywhere. And it lets the bar be genuinely absent at the top of the
+          page, so the hero reads full-bleed, then appear only once content
+          starts sliding underneath it.
+
+          It carries a tint as well as the blur: blur alone leaves dark hero
+          text legible through light glass and vice versa, so the tint is what
+          actually holds the separation. The `supports-` variants fall back to a
+          more opaque fill where backdrop-filter is unavailable.
+        */}
+        <div
+          aria-hidden="true"
+          className={[
+            "absolute inset-0 -z-10 border-b transition-opacity duration-500",
+            "ease-[cubic-bezier(0.25,1,0.5,1)] backdrop-blur-xl",
+            showBackdrop ? "opacity-100" : "opacity-0",
+            onDark
+              ? "border-paper/10 bg-ink/92 supports-[backdrop-filter]:bg-ink/70"
+              : "border-line bg-paper/95 supports-[backdrop-filter]:bg-paper/72",
+          ].join(" ")}
+        />
+
         <div className="page flex h-[var(--header-h)] items-center justify-between gap-6">
           <div className={onDark ? "on-ink text-paper" : "text-ink"}>
             <Wordmark tone={onDark ? "dark" : "light"} />

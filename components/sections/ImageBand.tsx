@@ -39,7 +39,7 @@ export function ImageBand({
   const y = useSpring(raw, { stiffness: 110, damping: 30, restDelta: 0.001 });
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-ink">
+    <section ref={ref} data-dark-section className="relative overflow-hidden bg-ink">
       <motion.div className="absolute inset-0" style={{ y, scale: 1.18 }}>
         <Image
           src={asset(src)}

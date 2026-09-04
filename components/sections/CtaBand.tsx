@@ -20,7 +20,7 @@ export function CtaBand({
   lead?: string;
 }) {
   return (
-    <section className="relative overflow-hidden bg-ink text-paper">
+    <section data-dark-section className="relative overflow-hidden bg-ink text-paper">
       <div
         className="pointer-events-none absolute -left-[14%] top-1/2 hidden -translate-y-1/2 lg:block"
         aria-hidden="true"

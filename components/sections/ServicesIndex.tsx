@@ -147,7 +147,10 @@ export function ServicesIndex({ compact = false }: { compact?: boolean }) {
               {/* Grounds the caption without flattening the photograph. */}
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t from-ink/95 via-ink/60 to-transparent" />
 
-              <div className="absolute inset-x-0 bottom-0 p-6">
+              {/* `data-over-image` marks text whose real backdrop is a
+                  photograph plus a gradient, which DOM-based contrast tooling
+                  cannot see. Measured from rendered pixels instead: 8.2:1. */}
+              <div data-over-image className="absolute inset-x-0 bottom-0 p-6">
                 <div className="mask-line">
                   <motion.p
                     key={`${current.slug}-label`}
