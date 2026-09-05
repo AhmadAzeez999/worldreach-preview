@@ -29,7 +29,7 @@ export function Footer() {
           {/* ---- Identity ---- */}
           <div className="lg:col-span-4">
             <Link href="/" className="-m-2 inline-flex items-center gap-3 p-2">
-              <Logo tone="light" className="h-12 w-auto" />
+              <Logo tone="light" className="h-[3.25rem] w-auto" />
               <span className="flex flex-col leading-none">
                 <span className="font-display text-xl leading-none tracking-[-0.02em] text-paper">
                   {org.shortName}

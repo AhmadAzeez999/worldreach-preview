@@ -31,7 +31,7 @@ export function Wordmark({
       <Logo
         tone={tone === "dark" ? "light" : "colour"}
         priority
-        className="h-11 w-auto shrink-0 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/wm:scale-[1.06] sm:h-12"
+        className="h-12 w-auto shrink-0 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/wm:scale-[1.06] sm:h-[3.25rem]"
       />
       <span className="flex flex-col leading-none">
         <span className="font-display text-[1.0625rem] leading-none tracking-[-0.02em] text-current sm:text-[1.1875rem]">
