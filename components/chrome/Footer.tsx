@@ -31,10 +31,10 @@ export function Footer() {
             <Link href="/" className="-m-2 inline-flex items-center gap-3 p-2">
               <Logo tone="light" className="h-[3.25rem] w-auto" />
               <span className="flex flex-col leading-none">
-                <span className="font-display text-xl leading-none tracking-[-0.02em] text-paper">
+                <span className="font-display text-[1.375rem] leading-none tracking-[-0.02em] text-paper">
                   {org.shortName}
                 </span>
-                <span className="mt-1.5 font-mono text-[0.5625rem] uppercase leading-none tracking-[0.19em] text-mute-dark">
+                <span className="mt-1.5 font-mono text-[0.625rem] uppercase leading-none tracking-[0.19em] text-mute-dark">
                   {org.descriptor}
                 </span>
               </span>

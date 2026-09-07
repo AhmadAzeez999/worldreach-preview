@@ -34,10 +34,10 @@ export function Wordmark({
         className="h-12 w-auto shrink-0 transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/wm:scale-[1.06] sm:h-[3.25rem]"
       />
       <span className="flex flex-col leading-none">
-        <span className="font-display text-[1.0625rem] leading-none tracking-[-0.02em] text-current sm:text-[1.1875rem]">
+        <span className="font-display text-[1.1875rem] leading-none tracking-[-0.02em] text-current sm:text-[1.3125rem]">
           {org.shortName}
         </span>
-        <span className="mt-1 font-mono text-[0.5rem] uppercase leading-none tracking-[0.19em] opacity-60 sm:text-[0.5625rem]">
+        <span className="mt-1 font-mono text-[0.5625rem] uppercase leading-none tracking-[0.19em] opacity-60 sm:text-[0.625rem]">
           {org.descriptor}
         </span>
       </span>
